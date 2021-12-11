@@ -63,7 +63,7 @@ void build_tree_analysis(grammar G, table t, char* chaine, int tailleChaine) {
 			
 			// On supprime les k élements (correspondant au nombre d'élements à droite du non-terminal) de la pile
           	while(G.rules[-1+action].rhs[k]!='\0') k++;
-          	taillePile-=k;
+          	taillePile-=k*2;
           	pile = (char *) realloc(pile, taillePile * sizeof(char));
           	
           	etatDepart = pile[taillePile]-'0';
