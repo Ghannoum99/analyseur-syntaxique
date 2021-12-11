@@ -87,6 +87,8 @@ void build_tree_analysis(grammar G, table t, char* chaine, int tailleChaine) {
 			reductions[tailleReductions] = action;
 			tailleReductions++;
 			reductions = (int *) realloc(reductions, tailleReductions * sizeof(int));
+			
+			i = i-1;
 		}
 		printf("\n");	
 	}
