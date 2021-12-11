@@ -1,15 +1,19 @@
 #include "analyseur.h"
 
 void build_tree_analysis(grammar G, table t, char* chaine, int tailleChaine) {
-	int i, j, k, taillePile, action, etatDepart;
+	int i, k, taillePile, tailleReductions, action, etatDepart;
 	char caractereTraite;
 	char* pile;
-	char c[100] = "$";
+	int* reductions;
+	
 	taillePile = 0;
 	pile = (char*) malloc(sizeof(char) * taillePile+1);
 	pile[taillePile] = '0';
 
-	//strcat(chaine, c);
+	tailleReductions = 0;
+	reductions = (int*) malloc(sizeof(int) * tailleReductions+1);
+
+	//strcat(chaine, "$");
 	
 	printf("	Flot | Pile | Règle \n");
 	printf("	-------------------\n");
@@ -79,9 +83,15 @@ void build_tree_analysis(grammar G, table t, char* chaine, int tailleChaine) {
 			
 			printf(" | ");
 			printf("r%d", action);
+			
+			reductions[tailleReductions] = action;
+			tailleReductions++;
+			reductions = (int *) realloc(reductions, tailleReductions * sizeof(int));
 		}
 		printf("\n");	
 	}
+	
+	print_derivations(reductions, tailleReductions, G);
 	
 	free(pile);
 }
@@ -125,5 +135,22 @@ void print_tree_analysis(char* chaine, int tailleChaine, char* pile, int tailleP
 	for (j=0; j<=taillePile; j++) 
 	{
 		printf("%c", pile[j]);
+	}
+}
+
+void print_derivations(int* reductions, int tailleReductions, grammar G) {
+	int j, k;
+	
+	for (j=0; j<tailleReductions; j++) {
+		k=0;
+		while(G.rules[-1+reductions[j]].rhs[k]!='\0'){
+        	if(G.rules[-1+reductions[j]].rhs[k]>0){
+		 		printf("%c", G.rules[-1+reductions[j]].rhs[k]); // faire un truc récursif
+			}
+        	else{
+        		printf("#%c", -G.rules[-1+reductions[j]].rhs[k]);
+			}
+		k++;
+		}
 	}
 }
