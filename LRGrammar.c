@@ -62,7 +62,7 @@ void print_table(table t, grammar G){
             k++;
           }
           printf(")\n");
-         }
+	     }
       }
     }
     for(j=128; j<256; j++){
