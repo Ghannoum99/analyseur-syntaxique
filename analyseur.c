@@ -15,7 +15,7 @@ void build_tree_analysis(grammar G, table t, char* chaine, int tailleChaine) {
 
 	//strcat(chaine, "$");
 	
-	printf("	Flot | Pile | Règle \n");
+	printf("	Flot | Pile \n");
 	printf("	-------------------\n");
 	
 	print_tree_analysis(chaine, tailleChaine, pile, taillePile, 0);
@@ -32,8 +32,6 @@ void build_tree_analysis(grammar G, table t, char* chaine, int tailleChaine) {
 		action = search_state_table(t, etatDepart, caractereTraite);
 		
 		//printf("caractère = %c, étatDep = %d, action = %d\n", caractereTraite, etatDepart, action);
-		
-		print_tree_analysis(chaine, tailleChaine, pile, taillePile, i+1);
 	
 		if (action == -257) {
 			printf("\n	accepté\n");
@@ -54,7 +52,7 @@ void build_tree_analysis(grammar G, table t, char* chaine, int tailleChaine) {
 			pile = (char *) realloc(pile, taillePile * sizeof(char));
 			pile[taillePile] = action + '0';
 			
-			printf(" | ");
+			printf("  ");
 			printf("d%d", action);
 		}
 		else {
@@ -81,7 +79,7 @@ void build_tree_analysis(grammar G, table t, char* chaine, int tailleChaine) {
 			pile = (char *) realloc(pile, taillePile * sizeof(char));
 			pile[taillePile] = search_state_table(t, etatDepart, caractereTraite)+'0';
 			
-			printf(" | ");
+			printf("  ");
 			printf("r%d", action);
 			
 			reductions[tailleReductions] = action;
@@ -90,12 +88,15 @@ void build_tree_analysis(grammar G, table t, char* chaine, int tailleChaine) {
 			
 			i = i-1;
 		}
+		print_tree_analysis(chaine, tailleChaine, pile, taillePile, i+1);
+	
 		printf("\n");	
 	}
 	
-	print_derivations(reductions, tailleReductions, G);
+	//print_derivations(reductions, tailleReductions, G);
 	
 	free(pile);
+	free(reductions);
 }
 
 int search_state_table(table t, int etatDepart, char caractereArechercher) {
