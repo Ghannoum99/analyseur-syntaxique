@@ -6,9 +6,9 @@ void build_tree_analysis(grammar G, table t, char* chaine, int tailleChaine) {
 	char* pile;
 	int* reductions;
 	
-	taillePile = 0;
-	pile = (char*) malloc(sizeof(char) * taillePile+1);
-	pile[taillePile] = '0';
+	taillePile = 1;
+	pile = (char*) malloc(sizeof(char) * taillePile);
+	pile[taillePile-1] = '0';
 
 	tailleReductions = 0;
 	reductions = (int*) malloc(sizeof(int) * tailleReductions+1);
@@ -26,7 +26,7 @@ void build_tree_analysis(grammar G, table t, char* chaine, int tailleChaine) {
 		caractereTraite = chaine[i];
 		
 		// On convertit le char en int
-		etatDepart = pile[taillePile]-'0'; 
+		etatDepart = pile[taillePile-1]-'0'; 
 		
 		// On va chercher l'état ou la règle à traiter
 		action = search_state_table(t, etatDepart, caractereTraite);
@@ -45,12 +45,12 @@ void build_tree_analysis(grammar G, table t, char* chaine, int tailleChaine) {
 			// On ajoute le caractère traité à la pile
 			taillePile++;
 			pile = (char *) realloc(pile, taillePile * sizeof(char));
-			pile[taillePile] = caractereTraite;
-			
+			pile[taillePile-1] = caractereTraite;
+		
 			// On ajoute l'état suivant à la pile
 			taillePile++;
 			pile = (char *) realloc(pile, taillePile * sizeof(char));
-			pile[taillePile] = action + '0';
+			pile[taillePile-1] = action + '0';
 			
 			printf("  ");
 			printf("d%d", action);
@@ -61,23 +61,24 @@ void build_tree_analysis(grammar G, table t, char* chaine, int tailleChaine) {
 			
 			// On supprime les k élements (correspondant au nombre d'élements à droite du non-terminal) de la pile
           	while(G.rules[-1+action].rhs[k]!='\0') k++;
-          	taillePile-=k*2;
+         
+          	taillePile = taillePile - (k*2);
           	pile = (char *) realloc(pile, taillePile * sizeof(char));
           	
-          	etatDepart = pile[taillePile]-'0';
+          	etatDepart = pile[taillePile-1]-'0';
           	
           	// On ajoute le non-terminal à la pile
           	taillePile++;
 			pile = (char *) realloc(pile, taillePile * sizeof(char));
-          	pile[taillePile] = G.rules[-1+action].lhs; 
+          	pile[taillePile-1] = G.rules[-1+action].lhs; 
           	
           	// Le caractère traité est le non-terminal	
-          	caractereTraite = pile[taillePile];
+          	caractereTraite = pile[taillePile-1];
           	
           	// On ajoute l'état suivant à la pile
           	taillePile++;
 			pile = (char *) realloc(pile, taillePile * sizeof(char));
-			pile[taillePile] = search_state_table(t, etatDepart, caractereTraite)+'0';
+          	pile[taillePile-1] = search_state_table(t, etatDepart, caractereTraite)+'0';
 			
 			printf("  ");
 			printf("r%d", action);
