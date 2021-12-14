@@ -1,9 +1,10 @@
 #include "analyseur.h"
 
-void build_tree_analysis(grammar G, table t, char* chaine, int tailleChaine) {
+void build_tree_analysis(grammar G, table t, char* c, int tailleChaine) {
 	int i, k, taillePile, tailleReductions, action, etatDepart;
 	char caractereTraite;
 	char* pile;
+	char* chaine;
 	int* reductions;
 	
 	taillePile = 1;
@@ -13,8 +14,12 @@ void build_tree_analysis(grammar G, table t, char* chaine, int tailleChaine) {
 	tailleReductions = 0;
 	reductions = (int*) malloc(sizeof(int) * tailleReductions+1);
 
-	//strcat(chaine, "$");
-	
+	// On va concaténer la chaîne passée en paramètre avec le caractère de fin de chaîne $
+	tailleChaine++;
+	chaine = (char*) malloc(sizeof(char) * tailleChaine);
+	strcpy(chaine, c);
+	strcat(chaine, "$");
+			
 	printf("	Flot | Pile \n");
 	printf("	-------------------\n");
 	
@@ -132,7 +137,7 @@ void print_tree_analysis(char* chaine, int tailleChaine, char* pile, int tailleP
 	printf("	");
 	for (j=i; j<tailleChaine; j++) 
 	{
-		printf("%c", chaine[j]);
+		if (chaine[j] != '$') printf("%c", chaine[j]);
 	}
 	printf(" | ");
 	for (j=0; j<taillePile; j++) 
