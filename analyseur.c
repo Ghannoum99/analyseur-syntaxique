@@ -134,9 +134,8 @@ void print_tree_analysis(char* chaine, int tailleChaine, char* pile, int tailleP
 	{
 		printf("%c", chaine[j]);
 	}
-	if (i == tailleChaine) printf("%c", '$');
 	printf(" | ");
-	for (j=0; j<=taillePile; j++) 
+	for (j=0; j<taillePile; j++) 
 	{
 		printf("%c", pile[j]);
 	}
