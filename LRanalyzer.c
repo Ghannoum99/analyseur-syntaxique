@@ -1,16 +1,21 @@
+#include "LRanalyzer.h"
 
-void build_tree_analysis(grammar G, table t, char* c) {
-	int i;
-	int k;
-	int tailleChaine;
-	int taillePile;
-	int tailleReductions; 
-	int action, etatDepart;
+/*
+ * Authors : GHANNOUM Jihad - TOIHIR Yoa
+ * 
+ * Algorithme pour la compilation
+ * 
+ * ISTY IATIC 4 2021 - 2022
+ * 
+ * 
+ */
+
+void build_tree_analysis(grammar G, table t, char* c, int tailleChaine) {
+	int i, k, taillePile, tailleReductions, action, etatDepart;
 	char caractereTraite;
 	char* pile;
 	char* chaine;
 	int* reductions;
-	
 	
 	taillePile = 1;
 	pile = (char*) malloc(sizeof(char) * taillePile);
@@ -20,22 +25,18 @@ void build_tree_analysis(grammar G, table t, char* c) {
 	reductions = (int*) malloc(sizeof(int) * tailleReductions+1);
 
 	// On va concaténer la chaîne passée en paramètre avec le caractère de fin de chaîne $
-	
-	tailleChaine = get_taille_chaine(c);
+	tailleChaine++;
 	chaine = (char*) malloc(sizeof(char) * tailleChaine);
 	strcpy(chaine, c);
 	strcat(chaine, "$");
-	
 			
-	printf("\tFlot\t|\tPile\t\n");
-	printf("\t-------------------\n");
+	printf("\n\t\tFlot\t\t|\t\tPile\n");
+	printf("\t----------------------------------------------------\n");
 	
 	print_tree_analysis(chaine, tailleChaine, pile, taillePile, 0);
 	printf("\n");
 	
-	
-	
-	for (i = 0; i <= tailleChaine; i++)
+	for (i=0; i<tailleChaine; i++) 
 	{
 		caractereTraite = chaine[i];
 		
@@ -103,7 +104,6 @@ void build_tree_analysis(grammar G, table t, char* c) {
 			
 			i = i-1;
 		}
-		
 		print_tree_analysis(chaine, tailleChaine, pile, taillePile, i+1);
 	
 		printf("\n");	
@@ -149,7 +149,7 @@ void print_tree_analysis(char* chaine, int tailleChaine, char* pile, int tailleP
 	{
 		if (chaine[j] != '$') printf("%c", chaine[j]);
 	}
-	printf("\t|\t");
+	printf("\t\t\t|\t\t");
 	for (j=0; j<taillePile; j++) 
 	{
 		printf("%c", pile[j]);
@@ -171,20 +171,4 @@ void print_derivations(int* reductions, int tailleReductions, grammar G) {
 		k++;
 		}
 	}
-}
-
-int get_taille_chaine(char * chaine) {
-	int i = 0;
-	int taille = 0;
-	char caractereTraite = chaine[0];
-	
-	while (caractereTraite != '\0')
-	{
-		i++;
-		taille = i ;
-		caractereTraite = chaine[i];
-		
-	}
-	
-	return taille;
 }

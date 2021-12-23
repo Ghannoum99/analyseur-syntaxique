@@ -1,0 +1,9 @@
+S:a$Sb
+S:b
+	a	b	$	S
+0	d2	d3		1
+1		d3	a
+2	d2	d3		4
+3		r2	r2
+4		d5
+5		r1	r1
