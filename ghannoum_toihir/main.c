@@ -15,9 +15,7 @@
 
 
 int main(int argc, char* argv[])
-{
-	int fainChaine = 0;
-	
+{	
 	if (argc < 3)
 	{
 		fprintf(stderr,"L'analyseur prend 3 arguments\n");
@@ -32,6 +30,5 @@ int main(int argc, char* argv[])
 	
 	build_tree_analysis(fr.G, fr.t, argv[2]);
 	
-	
-	
+	return 0;
 }

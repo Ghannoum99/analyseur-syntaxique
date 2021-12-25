@@ -5,11 +5,11 @@
  
 
 void build_tree_analysis(grammar G, table t, char* c) {
-	int i;
+	size_t i;
 	int k;
-	int taillePile;
-	int tailleChaine;
-	int tailleReductions;
+	unsigned int taillePile;
+	unsigned int tailleChaine;
+	unsigned int tailleReductions;
 	int action;
 	int etatDepart;
 	char caractereTraite;
@@ -117,7 +117,9 @@ void build_tree_analysis(grammar G, table t, char* c) {
 }
 
 int search_state_table(table t, int etatDepart, char caractereArechercher) {
-	int state, i, j;
+	int state;
+	size_t i, j;
+	
 	state = -258;
 
 	i = etatDepart;
@@ -143,7 +145,7 @@ int search_state_table(table t, int etatDepart, char caractereArechercher) {
 }
 
 void print_tree_analysis(char* chaine, int tailleChaine, char* pile, int taillePile, int i) {
-	int j;
+	size_t j;
 	
 	printf("	");
 	for (j=i; j<tailleChaine; j++) 
