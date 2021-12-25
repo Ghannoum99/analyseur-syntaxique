@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include "LRGrammar.h"
 #include "read_file.h"
-#include "LRanalyzer.h"
+#include "analyseur_syntaxique.h"
 
 
 // Remplacer le type des indices (size_t et pas int)
