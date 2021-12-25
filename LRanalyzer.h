@@ -1,3 +1,5 @@
+/* Authors: Jihad GHANNOUM, Yoa TOIHIR  */
+
 #ifndef ANALYSEUR
 #define ANALYSEUR
 

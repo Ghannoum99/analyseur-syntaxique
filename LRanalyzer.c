@@ -1,14 +1,8 @@
-#include "LRanalyzer.h"
+/* Authors: Jihad GHANNOUM, Yoa TOIHIR  */
 
-/*
- * Authors : GHANNOUM Jihad - TOIHIR Yoa
- * 
- * Algorithme pour la compilation
- * 
- * ISTY IATIC 4 2021 - 2022
- * 
- * 
- */
+
+#include "LRanalyzer.h"
+ 
 
 void build_tree_analysis(grammar G, table t, char* c, int tailleChaine) {
 	int i, k, taillePile, tailleReductions, action, etatDepart;
