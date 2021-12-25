@@ -4,12 +4,19 @@
 #include "LRanalyzer.h"
  
 
-void build_tree_analysis(grammar G, table t, char* c, int tailleChaine) {
-	int i, k, taillePile, tailleReductions, action, etatDepart;
+void build_tree_analysis(grammar G, table t, char* c) {
+	int i;
+	int k;
+	int taillePile;
+	int tailleChaine;
+	int tailleReductions;
+	int action;
+	int etatDepart;
 	char caractereTraite;
 	char* pile;
 	char* chaine;
 	int* reductions;
+	
 	
 	taillePile = 1;
 	pile = (char*) malloc(sizeof(char) * taillePile);
@@ -19,7 +26,7 @@ void build_tree_analysis(grammar G, table t, char* c, int tailleChaine) {
 	reductions = (int*) malloc(sizeof(int) * tailleReductions+1);
 
 	// On va concaténer la chaîne passée en paramètre avec le caractère de fin de chaîne $
-	tailleChaine++;
+	tailleChaine = strlen(c) + 1;
 	chaine = (char*) malloc(sizeof(char) * tailleChaine);
 	strcpy(chaine, c);
 	strcat(chaine, "$");

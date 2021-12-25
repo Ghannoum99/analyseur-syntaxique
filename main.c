@@ -29,8 +29,8 @@ int main(int argc, char* argv[])
 	print_table(fr.t, fr.G);
 	
 	printf("\n");
-		
-	build_tree_analysis(fr.G, fr.t, argv[2],5);
+	
+	build_tree_analysis(fr.G, fr.t, argv[2]);
 	
 	
 	
