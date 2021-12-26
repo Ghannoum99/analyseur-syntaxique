@@ -5,6 +5,7 @@
  
 
 void build_tree_analysis(grammar G, table t, char* c) {
+	
 	size_t i;
 	int k;
 	unsigned int taillePile;
@@ -50,14 +51,19 @@ void build_tree_analysis(grammar G, table t, char* c) {
 		//printf("caractère = %c, étatDep = %d, action = %d\n", caractereTraite, etatDepart, action);
 	
 		if (action == -257) {
+			
 			printf("\n	accepté\n");
 			break;
+			
 		}
 		else if (action == -258) {
+			
 			printf("\n	refusé\n");
 			break;
+			
 		}
 		else if (action > 0) {
+			
 			// On ajoute le caractère traité à la pile
 			taillePile++;
 			pile = (char *) realloc(pile, taillePile * sizeof(char));
@@ -70,8 +76,10 @@ void build_tree_analysis(grammar G, table t, char* c) {
 			
 			printf("  ");
 			printf("d%d", action);
+			
 		}
 		else {
+			
 			k=0;
 			action = -action;
 			
@@ -104,19 +112,23 @@ void build_tree_analysis(grammar G, table t, char* c) {
 			reductions = (int *) realloc(reductions, tailleReductions * sizeof(int));
 			
 			i = i-1;
+			
 		}
+		
 		print_tree_analysis(chaine, tailleChaine, pile, taillePile, i+1);
-	
 		printf("\n");	
+		
 	}
 	
 	//print_derivations(reductions, tailleReductions, G);
 	
 	free(pile);
 	free(reductions);
+	
 }
 
 int search_state_table(table t, int etatDepart, char caractereArechercher) {
+	
 	int state;
 	size_t i, j;
 	
@@ -125,53 +137,83 @@ int search_state_table(table t, int etatDepart, char caractereArechercher) {
 	i = etatDepart;
 	j = caractereArechercher;
 
-  	if(t.trans[256*i]){
-  		if(t.trans[256*i]==-127){
+  	if(t.trans[256*i])
+  	{
+		
+  		if(t.trans[256*i]==-127)
+  		{
+			
         	state =  -257; // accepté
       	}
-      	else{
+      	
+      	else
+      	{
+			
         	state = t.trans[256*i];
+        	
        	}
 	}
 
-	if(t.trans[256*i+(256-j)]){
+	if(t.trans[256*i+(256-j)])
+	{
+		
 		state = t.trans[256*i+(256-j)];
+		
     }
-    else if (t.trans[256*i+j]){
+    else if (t.trans[256*i+j])
+    {
+		
     	state = t.trans[256*i+j];
+    	
 	}
     
   	return state;
 }
 
-void print_tree_analysis(char* chaine, int tailleChaine, char* pile, int taillePile, int i) {
+void print_tree_analysis(char* chaine, int tailleChaine, char* pile, int taillePile, size_t i) {
+	
 	size_t j;
 	
 	printf("	");
+	
 	for (j=i; j<tailleChaine; j++) 
 	{
 		if (chaine[j] != '$') printf("%c", chaine[j]);
 	}
+	
 	printf("\t\t\t|\t\t");
+	
 	for (j=0; j<taillePile; j++) 
 	{
 		printf("%c", pile[j]);
 	}
+	
 }
 
 void print_derivations(int* reductions, int tailleReductions, grammar G) {
-	int j, k;
+	
+	size_t j, k;
 	
 	for (j=0; j<tailleReductions; j++) {
+		
 		k=0;
+		
 		while(G.rules[-1+reductions[j]].rhs[k]!='\0'){
+			
         	if(G.rules[-1+reductions[j]].rhs[k]>0){
+				
 		 		printf("%c", G.rules[-1+reductions[j]].rhs[k]); // faire un truc récursif
 			}
+			
         	else{
+				
         		printf("#%c", -G.rules[-1+reductions[j]].rhs[k]);
+        		
 			}
+			
 		k++;
+		
 		}
 	}
+	
 }
