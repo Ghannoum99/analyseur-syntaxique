@@ -136,33 +136,12 @@ int search_state_table(table t, int etatDepart, char caractereArechercher) {
 
   	if(t.trans[256*i])
   	{
-		
-  		if(t.trans[256*i]==-127)
-  		{
-			
-        	state =  -257; // accepté
-      	}
-      	
-      	else
-      	{
-			
-        	state = t.trans[256*i];
-        	
-       	}
+  		if(t.trans[256*i]==-127) state =  -257; // accepté
+      	else state = t.trans[256*i];
 	}
 
-	if(t.trans[256*i+(256-j)])
-	{
-		
-		state = t.trans[256*i+(256-j)];
-		
-    }
-    else if (t.trans[256*i+j])
-    {
-		
-    	state = t.trans[256*i+j];
-    	
-	}
+	if(t.trans[256*i+(256-j)]) state = t.trans[256*i+(256-j)];
+	else if (t.trans[256*i+j]) state = t.trans[256*i+j];
     
   	return state;
 }
