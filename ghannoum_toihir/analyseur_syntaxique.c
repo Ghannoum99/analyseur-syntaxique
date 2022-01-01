@@ -17,7 +17,6 @@ void build_tree_analysis(grammar G, table t, char* chaine) {
 	char* pile;
 	int* reductions;
 	
-	
 	taillePile = 1;
 	pile = (char*) malloc(sizeof(char) * taillePile);
 	pile[taillePile-1] = '0';
@@ -25,8 +24,9 @@ void build_tree_analysis(grammar G, table t, char* chaine) {
 	tailleReductions = 0;
 	reductions = (int*) malloc(sizeof(int) * tailleReductions+1);
 
-	tailleChaine = strlen(chaine);
-
+	// On va concaténer la chaîne passée en paramètre avec le caractère de fin de chaîne $
+	tailleChaine = strlen(chaine) + 1;
+			
 	printf("\n\t\tFlot\t\t|\t\tPile\n");
 	printf("\t----------------------------------------------------\n");
 	
@@ -35,7 +35,7 @@ void build_tree_analysis(grammar G, table t, char* chaine) {
 	
 	for (i=0; i<tailleChaine; i++) 
 	{
-		if (i == tailleChaine-1) caractereTraite = '$';
+		if (chaine[i] == 0) caractereTraite = '$';
 		else caractereTraite = chaine[i];
 		
 		// On convertit le char en int
@@ -128,16 +128,18 @@ int search_state_table(table t, int etatDepart, char caractereArechercher) {
 	int state;
 	size_t i, j;
 	
-	state = 0; // refusé
+	state = 0;
 
 	i = etatDepart;
 	j = caractereArechercher;
 
   	if(t.trans[256*i]) state = t.trans[256*i];
-	else if(t.trans[256*i+(256-j)]) state = t.trans[256*i+(256-j)];
-	else if (t.trans[256*i+j]) state = t.trans[256*i+j];
-    
-    return state;
+
+	if(t.trans[256*i+(256-j)]) state = t.trans[256*i+(256-j)];
+		
+    else if (t.trans[256*i+j]) state = t.trans[256*i+j];
+    	 
+  	return state;
 }
 
 void print_tree_analysis(char* chaine, int tailleChaine, char* pile, int taillePile, size_t i) {
@@ -148,7 +150,7 @@ void print_tree_analysis(char* chaine, int tailleChaine, char* pile, int tailleP
 	
 	for (j=i; j<tailleChaine; j++) 
 	{
-		printf("%c", chaine[j]);
+		if (chaine[j] != '$') printf("%c", chaine[j]);
 	}
 	
 	printf("\t\t\t|\t\t");
