@@ -10,9 +10,15 @@ ISTY | IATIC 4 | 2021-2022
 
 ### Compiler le programme :
 
+```sh
+$ tar xvfz ghannoum_toihir.tgz
+$ cd ghannoum_toihir
+$ make
+```
 
 ### Lancer le programme :
 
-
-## Avertissement
+```sh
+$ ./LRanalyzer ./tests/<fichier-test> "ChainedeCaractères"
+```
 
