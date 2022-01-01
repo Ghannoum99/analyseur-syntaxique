@@ -36,11 +36,11 @@ void build_tree_analysis(grammar G, table t, char* chaine) {
 	
 	for (i=0; i<tailleChaine; i++) 
 	{
-		caractereTraite = chaine[i];
+		if (chaine[i] == '\n') caractereTraite = '$';
+		else caractereTraite = chaine[i];
 		
 		// On convertit le char en int
-		if (pile[taillePile-1] == '\n') etatDepart = '$'-'0';
-		else etatDepart = pile[taillePile-1]-'0'; 
+		etatDepart = pile[taillePile-1]-'0'; 
 		
 		// On va chercher l'état ou la règle à traiter
 		action = search_state_table(t, etatDepart, caractereTraite);
