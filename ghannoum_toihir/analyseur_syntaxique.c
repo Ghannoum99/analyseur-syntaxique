@@ -15,14 +15,14 @@ void build_tree_analysis(grammar G, table t, char* chaine) {
 	int etatDepart;
 	char caractereTraite;
 	char* pile;
-	int* reductions;
+	char* reductions;
 	
 	taillePile = 1;
 	pile = (char*) malloc(sizeof(char) * taillePile);
 	pile[taillePile-1] = '0';
 
-	tailleReductions = 0;
-	reductions = (int*) malloc(sizeof(int) * tailleReductions+1);
+	tailleReductions = 1;
+	reductions = (char*) malloc(sizeof(char) * tailleReductions);
 
 	// On va concaténer la chaîne passée en paramètre avec le caractère de fin de chaîne $
 	tailleChaine = strlen(chaine) + 1;
@@ -103,9 +103,9 @@ void build_tree_analysis(grammar G, table t, char* chaine) {
 			printf("  ");
 			printf("r%d", action);
 			
-			reductions[tailleReductions] = action;
+			reductions[tailleReductions-1] = caractereTraite;
 			tailleReductions++;
-			reductions = (int *) realloc(reductions, tailleReductions * sizeof(int));
+			reductions = (char *) realloc(reductions, tailleReductions * sizeof(char));
 			
 			i = i-1;
 			
@@ -116,7 +116,9 @@ void build_tree_analysis(grammar G, table t, char* chaine) {
 		
 	}
 	
-	//print_derivations(reductions, tailleReductions, G);
+	printf("\n");
+	print_derivations(reductions, tailleChaine-2, chaine, 0);
+	printf("\n");
 	
 	free(pile);
 	free(reductions);
@@ -150,7 +152,7 @@ void print_tree_analysis(char* chaine, int tailleChaine, char* pile, int tailleP
 	
 	for (j=i; j<tailleChaine; j++) 
 	{
-		if (chaine[j] != '$') printf("%c", chaine[j]);
+		printf("%c", chaine[j]);
 	}
 	
 	printf("\t\t\t|\t\t");
@@ -162,30 +164,9 @@ void print_tree_analysis(char* chaine, int tailleChaine, char* pile, int tailleP
 	
 }
 
-void print_derivations(int* reductions, int tailleReductions, grammar G) {
+void print_derivations(char* reductions, int tailleChaine, char* chaine, int i) {
 	
-	size_t j, k;
-	
-	for (j=0; j<tailleReductions; j++) {
-		
-		k=0;
-		
-		while(G.rules[-1+reductions[j]].rhs[k]!='\0'){
-			
-        	if(G.rules[-1+reductions[j]].rhs[k]>0){
-				
-		 		printf("%c", G.rules[-1+reductions[j]].rhs[k]); // faire un truc récursif
-			}
-			
-        	else{
-				
-        		printf("#%c", -G.rules[-1+reductions[j]].rhs[k]);
-        		
-			}
-			
-		k++;
-		
-		}
-	}
-	
+	printf("%c(%c()", reductions[i], chaine[i]);
+	if (i < tailleChaine) print_derivations(reductions, tailleChaine, chaine, i+1);
+	printf(")");
 }
