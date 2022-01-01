@@ -6,13 +6,13 @@
 
 int main()
 {
-	file_read fr = read_file("./tests/test4");
+	file_read fr = read_file("./tests/test");
 	print_grammar(fr.G);
 	print_table(fr.t, fr.G);
 	
 	printf("\n");
 	
-	build_tree_analysis(fr.G, fr.t, "cbcac", 5);
+	build_tree_analysis(fr.G, fr.t, "babb", 4);
 	
 	return 0;
 }
