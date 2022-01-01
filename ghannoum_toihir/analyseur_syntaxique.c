@@ -4,7 +4,7 @@
 #include "analyseur_syntaxique.h"
  
 
-void build_tree_analysis(grammar G, table t, char* c) {
+void build_tree_analysis(grammar G, table t, char* chaine) {
 	
 	size_t i;
 	int k;
@@ -15,7 +15,6 @@ void build_tree_analysis(grammar G, table t, char* c) {
 	int etatDepart;
 	char caractereTraite;
 	char* pile;
-	char* chaine;
 	int* reductions;
 	
 	
@@ -27,11 +26,8 @@ void build_tree_analysis(grammar G, table t, char* c) {
 	reductions = (int*) malloc(sizeof(int) * tailleReductions+1);
 
 	// On va concaténer la chaîne passée en paramètre avec le caractère de fin de chaîne $
-	tailleChaine = strlen(c) + 1;
-	chaine = (char*) malloc(sizeof(char) * tailleChaine);
-	strcpy(chaine, c);
-	strcat(chaine, "$");
-			
+	tailleChaine = strlen(chaine);
+
 	printf("\n\t\tFlot\t\t|\t\tPile\n");
 	printf("\t----------------------------------------------------\n");
 	
@@ -43,7 +39,8 @@ void build_tree_analysis(grammar G, table t, char* c) {
 		caractereTraite = chaine[i];
 		
 		// On convertit le char en int
-		etatDepart = pile[taillePile-1]-'0'; 
+		if (pile[taillePile-1] == '\n') etatDepart = '$'-'0';
+		else etatDepart = pile[taillePile-1]-'0'; 
 		
 		// On va chercher l'état ou la règle à traiter
 		action = search_state_table(t, etatDepart, caractereTraite);
