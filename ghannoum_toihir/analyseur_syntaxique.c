@@ -24,7 +24,6 @@ void build_tree_analysis(grammar G, table t, char* chaine) {
 	tailleReductions = 1;
 	reductions = (char*) malloc(sizeof(char) * tailleReductions);
 
-	// On va concaténer la chaîne passée en paramètre avec le caractère de fin de chaîne $
 	tailleChaine = strlen(chaine) + 1;
 			
 	printf("\n\t\tFlot\t\t|\t\tPile\n");
