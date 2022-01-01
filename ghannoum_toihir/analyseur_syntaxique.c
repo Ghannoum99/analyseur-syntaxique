@@ -36,7 +36,7 @@ void build_tree_analysis(grammar G, table t, char* chaine) {
 	
 	for (i=0; i<tailleChaine; i++) 
 	{
-		if (chaine[i] == '\n') caractereTraite = '$';
+		if (i == tailleChaine-1) caractereTraite = '$';
 		else caractereTraite = chaine[i];
 		
 		// On convertit le char en int
@@ -47,13 +47,13 @@ void build_tree_analysis(grammar G, table t, char* chaine) {
 		
 		//printf("caractère = %c, étatDep = %d, action = %d\n", caractereTraite, etatDepart, action);
 	
-		if (action == -257) {
+		if (action == -127) {
 			
 			printf("\n	accepté\n");
 			break;
 			
 		}
-		else if (action == -258) {
+		else if (action == 0) {
 			
 			printf("\n	refusé\n");
 			break;
@@ -129,21 +129,20 @@ int search_state_table(table t, int etatDepart, char caractereArechercher) {
 	int state;
 	size_t i, j;
 	
-	state = -258; // refusé
+	state = 0; // refusé
 
 	i = etatDepart;
 	j = caractereArechercher;
 
   	if(t.trans[256*i])
   	{
-  		if(t.trans[256*i]==-127) state =  -257; // accepté
-      	else state = t.trans[256*i];
+  		state = t.trans[256*i];
 	}
 
 	if(t.trans[256*i+(256-j)]) state = t.trans[256*i+(256-j)];
 	else if (t.trans[256*i+j]) state = t.trans[256*i+j];
     
-  	return state;
+    return state;
 }
 
 void print_tree_analysis(char* chaine, int tailleChaine, char* pile, int taillePile, size_t i) {
@@ -154,7 +153,7 @@ void print_tree_analysis(char* chaine, int tailleChaine, char* pile, int tailleP
 	
 	for (j=i; j<tailleChaine; j++) 
 	{
-		if (chaine[j] != '$') printf("%c", chaine[j]);
+		printf("%c", chaine[j]);
 	}
 	
 	printf("\t\t\t|\t\t");
