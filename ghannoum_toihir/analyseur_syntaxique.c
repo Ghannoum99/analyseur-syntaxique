@@ -25,7 +25,6 @@ void build_tree_analysis(grammar G, table t, char* chaine) {
 	tailleReductions = 0;
 	reductions = (int*) malloc(sizeof(int) * tailleReductions+1);
 
-	// On va concaténer la chaîne passée en paramètre avec le caractère de fin de chaîne $
 	tailleChaine = strlen(chaine);
 
 	printf("\n\t\tFlot\t\t|\t\tPile\n");
@@ -134,12 +133,8 @@ int search_state_table(table t, int etatDepart, char caractereArechercher) {
 	i = etatDepart;
 	j = caractereArechercher;
 
-  	if(t.trans[256*i])
-  	{
-  		state = t.trans[256*i];
-	}
-
-	if(t.trans[256*i+(256-j)]) state = t.trans[256*i+(256-j)];
+  	if(t.trans[256*i]) state = t.trans[256*i];
+	else if(t.trans[256*i+(256-j)]) state = t.trans[256*i+(256-j)];
 	else if (t.trans[256*i+j]) state = t.trans[256*i+j];
     
     return state;
