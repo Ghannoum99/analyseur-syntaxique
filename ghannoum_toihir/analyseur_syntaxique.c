@@ -129,7 +129,7 @@ int search_state_table(table t, int etatDepart, char caractereArechercher) {
 	int state;
 	size_t i, j;
 	
-	state = -258;
+	state = -258; // refusé
 
 	i = etatDepart;
 	j = caractereArechercher;
