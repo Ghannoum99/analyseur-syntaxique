@@ -7,7 +7,6 @@
 #include "analyseur_syntaxique.h"
 
 
-// Remplacer le type des indices (size_t et pas int)
  // si l atable ne correspond pas à la grammaire, le comportement de l'analyseur n'est pas défini
  // arbre d'analyse
  // à la fin de l'exécution, il dira si le texte est accepté ou pas
@@ -18,7 +17,7 @@ int main(int argc, char* argv[])
 {	
 	if (argc < 3)
 	{
-		fprintf(stderr,"error: too few arguments in function 'build_tree_analysis'\n");
+		fprintf(stderr,"error: too few arguments\n");
 		exit(EXIT_FAILURE);
 	}
 	
