@@ -18,7 +18,7 @@ int main(int argc, char* argv[])
 {	
 	if (argc < 3)
 	{
-		fprintf(stderr,"error: too few arguments in fonction 'build_tree_analysis'\n");
+		fprintf(stderr,"error: too few arguments in function 'build_tree_analysis'\n");
 		exit(EXIT_FAILURE);
 	}
 	
