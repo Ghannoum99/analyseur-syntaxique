@@ -18,13 +18,13 @@ int main(int argc, char* argv[])
 {	
 	if (argc < 3)
 	{
-		fprintf(stderr,"L'analyseur prend 3 arguments\n");
+		fprintf(stderr,"error: too few arguments in fonction 'build_tree_analysis'\n");
 		exit(EXIT_FAILURE);
 	}
 	
 	file_read fr = read_file(argv[1]);
-	print_grammar(fr.G);
-	print_table(fr.t, fr.G);
+	//print_grammar(fr.G);
+	//print_table(fr.t, fr.G);
 	
 	printf("\n");
 	
