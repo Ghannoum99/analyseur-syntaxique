@@ -4,7 +4,7 @@
 #include "analyseur_syntaxique.h"
  
 
-void build_tree_analysis(grammar G, table t, char* chaine) {
+void build_pile_AST(grammar G, table t, char* chaine) {
 	
 	size_t i;
 	int k;
@@ -29,7 +29,7 @@ void build_tree_analysis(grammar G, table t, char* chaine) {
 	printf("\n\t\tFlot\t\t|\t\tPile\n");
 	printf("\t----------------------------------------------------\n");
 	
-	print_tree_analysis(chaine, tailleChaine, pile, taillePile, 0);
+	print_pile(chaine, tailleChaine, pile, taillePile, 0);
 	printf("\n");
 	
 	for (i=0; i<tailleChaine; i++) 
@@ -108,7 +108,7 @@ void build_tree_analysis(grammar G, table t, char* chaine) {
 			i = i-1;	
 		}
 		
-		print_tree_analysis(chaine, tailleChaine, pile, taillePile, i+1);
+		print_pile(chaine, tailleChaine, pile, taillePile, i+1);
 		printf("\n");	
 		
 	}
@@ -141,7 +141,7 @@ int search_state_table(table t, int etatDepart, char caractereArechercher) {
   	return state;
 }
 
-void print_tree_analysis(char* chaine, int tailleChaine, char* pile, int taillePile, size_t i) {
+void print_pile(char* chaine, int tailleChaine, char* pile, int taillePile, size_t i) {
 	
 	size_t j;
 	
