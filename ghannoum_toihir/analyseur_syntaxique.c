@@ -15,14 +15,14 @@ void build_tree_analysis(grammar G, table t, char* chaine) {
 	int etatDepart;
 	char caractereTraite;
 	char* pile;
-	char* reductions;
+	int* reductions;
 	
 	taillePile = 1;
 	pile = (char*) malloc(sizeof(char) * taillePile);
 	pile[taillePile-1] = '0';
 
-	tailleReductions = 1;
-	reductions = (char*) malloc(sizeof(char) * tailleReductions);
+	tailleReductions = 0;
+	reductions = (int*) malloc(sizeof(int) * tailleReductions+1);
 
 	tailleChaine = strlen(chaine) + 1;
 			
@@ -80,9 +80,8 @@ void build_tree_analysis(grammar G, table t, char* chaine) {
 			
 			// On supprime les k élements (correspondant au nombre d'élements à droite du non-terminal) de la pile
           	while(G.rules[-1+action].rhs[k]!='\0') k++;
-         
+         	
           	taillePile = taillePile - (k*2);
-          	pile = (char *) realloc(pile, taillePile * sizeof(char));
           	
           	etatDepart = pile[taillePile-1]-'0';
           	
@@ -101,13 +100,12 @@ void build_tree_analysis(grammar G, table t, char* chaine) {
 			
 			printf("  ");
 			printf("r%d", action);
-			
-			reductions[tailleReductions-1] = caractereTraite;
+				
 			tailleReductions++;
-			reductions = (char *) realloc(reductions, tailleReductions * sizeof(char));
+			reductions = (int *) realloc(reductions, tailleReductions * sizeof(int));
+			reductions[tailleReductions-1] = action;
 			
-			i = i-1;
-			
+			i = i-1;	
 		}
 		
 		print_tree_analysis(chaine, tailleChaine, pile, taillePile, i+1);
@@ -116,7 +114,7 @@ void build_tree_analysis(grammar G, table t, char* chaine) {
 	}
 	
 	printf("\n");
-	print_derivations(reductions, tailleChaine-2, chaine, 0);
+	print_AST(G, reductions, tailleReductions, chaine, tailleReductions-1);
 	printf("\n");
 	
 	free(pile);
@@ -163,9 +161,30 @@ void print_tree_analysis(char* chaine, int tailleChaine, char* pile, int tailleP
 	
 }
 
-void print_derivations(char* reductions, int tailleChaine, char* chaine, int i) {
+void print_AST(grammar G, int* reductions, int tailleReductions, char* chaine, int i) {
 	
-	printf("%c(%c()", reductions[i], chaine[i]);
-	if (i < tailleChaine) print_derivations(reductions, tailleChaine, chaine, i+1);
+	int k, ind, iBis;
+	char * search;
+	
+	k = 0;
+	ind = reductions[i];
+	printf("%c(", G.rules[-1+ind].lhs);
+	while(G.rules[-1+ind].rhs[k]!='\0') 
+	{
+		search = strchr(chaine, G.rules[-1+ind].rhs[k]);
+		if (search != NULL) printf("%c()", G.rules[-1+ind].rhs[k]);
+		else {
+			if (i >= 0) {
+				iBis = i;
+				iBis--;
+				while (G.rules[-1+ind].rhs[k] != -G.rules[-1+reductions[iBis]].lhs) {
+					iBis--;
+				}
+				print_AST(G, reductions, tailleReductions, chaine, iBis);
+			}
+		}
+
+		k++;
+	}
 	printf(")");
 }
