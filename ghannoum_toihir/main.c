@@ -27,7 +27,7 @@ int main(int argc, char* argv[])
 	
 	printf("\n");
 	
-	build_tree_analysis(fr.G, fr.t, argv[2]);
+	build_pile_AST(fr.G, fr.t, argv[2]);
 	
 	return 0;
 }
