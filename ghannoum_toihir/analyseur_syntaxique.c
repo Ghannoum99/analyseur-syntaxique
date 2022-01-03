@@ -167,13 +167,19 @@ void print_AST(grammar G, int* reductions, int tailleReductions, char* chaine, i
 	char * search;
 	
 	k = 0;
+	
+	// On récupère la ième règle 
 	ind = reductions[i];
+	
 	printf("%c(", G.rules[-1+ind].lhs);
+	
 	while(G.rules[-1+ind].rhs[k]!='\0') 
 	{
+		// On vérifie si le caractère est terminal ou non
 		search = strchr(chaine, G.rules[-1+ind].rhs[k]);
 		if (search != NULL) printf("%c()", G.rules[-1+ind].rhs[k]);
 		else {
+			// Pour les caractères non-terminaux on va appeler récursivement la fonction 
 			if (i >= 0) {
 				iBis = i;
 				iBis--;
