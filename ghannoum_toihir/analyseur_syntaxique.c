@@ -113,9 +113,11 @@ void build_pile_AST(grammar G, table t, char* chaine) {
 		
 	}
 	
-	printf("\n");
-	print_AST(G, reductions, tailleReductions, chaine, tailleReductions-1);
-	printf("\n");
+	if (action != 0) {
+		printf("\n");
+		print_AST(G, reductions, tailleReductions, chaine, tailleReductions-1);
+		printf("\n");
+	}
 	
 	free(pile);
 	free(reductions);
@@ -183,7 +185,7 @@ void print_AST(grammar G, int* reductions, int tailleReductions, char* chaine, i
 			if (i >= 0) {
 				iBis = i;
 				iBis--;
-				while (G.rules[-1+ind].rhs[k] != -G.rules[-1+reductions[iBis]].lhs) {
+				while (abs(G.rules[-1+ind].rhs[k]) != abs(G.rules[-1+reductions[iBis]].lhs)) {
 					iBis--;
 				}
 				print_AST(G, reductions, tailleReductions, chaine, iBis);
