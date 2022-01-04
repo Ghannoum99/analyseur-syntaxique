@@ -1,8 +1,8 @@
 # analyseur-syntaxique
 
 ## Auteurs
-* GHANNOUM jihad
-* TOIHIR Yoa
+* Jihad GHANNOUM
+* Yoa TOIHIR
 
 ISTY | IATIC 4 | 2021-2022
 
@@ -19,6 +19,6 @@ $ make
 ### Lancer le programme :
 
 ```sh
-$ ./LRanalyzer ./tests/<fichier-test> "ChainedeCaractères"
+$ ./LRanalyzer ../"fichier-test" "ChainedeCaractères"
 ```
 
