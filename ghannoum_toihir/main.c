@@ -19,9 +19,7 @@ int main(int argc, char* argv[])
 	}
 	
 	file_read fr = read_file(argv[1]);
-	//print_grammar(fr.G);
-	//print_table(fr.t, fr.G);
-	
+
 	printf("\n");
 	
 	build_pile_AST(fr.G, fr.t, argv[2]);
