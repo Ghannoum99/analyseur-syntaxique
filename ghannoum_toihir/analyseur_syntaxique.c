@@ -113,6 +113,7 @@ void build_pile_AST(grammar G, table t, char* chaine) {
 		
 	}
 	
+	// S'il n'y a pas d'erreur, on affiche l'AST
 	if (action != 0) {
 		printf("\n");
 		print_AST(G, reductions, tailleReductions, chaine, tailleReductions-1);
@@ -175,6 +176,7 @@ void print_AST(grammar G, int* reductions, int tailleReductions, char* chaine, i
 	
 	printf("%c(", G.rules[-1+ind].lhs);
 	
+	// On parcourt les caractères de la règle
 	while(G.rules[-1+ind].rhs[k]!='\0') 
 	{
 		// On vérifie si le caractère est terminal ou non
