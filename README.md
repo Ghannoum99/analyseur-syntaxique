@@ -19,6 +19,6 @@ $ make
 ### Lancer le programme :
 
 ```sh
-$ ./LRanalyzer ../"fichier-test" "ChainedeCaractères"
+$ ./LRanalyzer ../fichier_de_test "ChainedeCaractères"
 ```
 
