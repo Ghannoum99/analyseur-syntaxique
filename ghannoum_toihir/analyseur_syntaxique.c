@@ -8,18 +8,17 @@ void build_pile_AST(grammar G, table t, char* chaine) {
 	
 	size_t i;
 	int k;
-	unsigned int taillePile;
 	unsigned int tailleChaine;
 	unsigned int tailleReductions;
 	int action;
 	int etatDepart;
 	char caractereTraite;
-	char* pile;
+	PILE pile;
 	int* reductions;
 	
-	taillePile = 1;
-	pile = (char*) malloc(sizeof(char) * taillePile);
-	pile[taillePile-1] = '0';
+	pile.taillePile = 1;
+	pile.tab = (char*) malloc(sizeof(char) * pile.taillePile);
+	pile.tab[pile.taillePile-1] = '0';
 
 	tailleReductions = 0;
 	reductions = (int*) malloc(sizeof(int) * tailleReductions+1);
@@ -29,7 +28,7 @@ void build_pile_AST(grammar G, table t, char* chaine) {
 	printf("\n\t\tFlot\t\t|\t\tPile\n");
 	printf("\t----------------------------------------------------\n");
 	
-	print_pile(chaine, tailleChaine, pile, taillePile, 0);
+	print_pile(chaine, tailleChaine, pile, 0);
 	printf("\n");
 	
 	for (i=0; i<tailleChaine; i++) 
@@ -38,13 +37,11 @@ void build_pile_AST(grammar G, table t, char* chaine) {
 		else caractereTraite = chaine[i];
 		
 		// On convertit le char en int
-		etatDepart = pile[taillePile-1]-'0'; 
+		etatDepart = pile.tab[pile.taillePile-1]-'0'; 
 		
 		// On va chercher l'état ou la règle à traiter
 		action = search_state_table(t, etatDepart, caractereTraite);
 		
-		//printf("caractère = %c, étatDep = %d, action = %d\n", caractereTraite, etatDepart, action);
-	
 		if (action == -127) {
 			
 			printf("\n	accepté\n");
@@ -60,14 +57,14 @@ void build_pile_AST(grammar G, table t, char* chaine) {
 		else if (action > 0) {
 			
 			// On ajoute le caractère traité à la pile
-			taillePile++;
-			pile = (char *) realloc(pile, taillePile * sizeof(char));
-			pile[taillePile-1] = caractereTraite;
+			pile.taillePile++;
+			pile.tab = (char *) realloc(pile.tab, pile.taillePile * sizeof(char));
+			pile.tab[pile.taillePile-1] = caractereTraite;
 		
 			// On ajoute l'état suivant à la pile
-			taillePile++;
-			pile = (char *) realloc(pile, taillePile * sizeof(char));
-			pile[taillePile-1] = action + '0';
+			pile.taillePile++;
+			pile.tab = (char *) realloc(pile.tab, pile.taillePile * sizeof(char));
+			pile.tab[pile.taillePile-1] = action + '0';
 			
 			printf("  ");
 			printf("d%d", action);
@@ -81,22 +78,22 @@ void build_pile_AST(grammar G, table t, char* chaine) {
 			// On supprime les k élements (correspondant au nombre d'élements à droite du non-terminal) de la pile
           	while(G.rules[-1+action].rhs[k]!='\0') k++;
          	
-          	taillePile = taillePile - (k*2);
+          	pile.taillePile = pile.taillePile - (k*2);
           	
-          	etatDepart = pile[taillePile-1]-'0';
+          	etatDepart = pile.tab[pile.taillePile-1]-'0';
           	
           	// On ajoute le non-terminal à la pile
-          	taillePile++;
-			pile = (char *) realloc(pile, taillePile * sizeof(char));
-          	pile[taillePile-1] = G.rules[-1+action].lhs; 
+          	pile.taillePile++;
+			pile.tab = (char *) realloc(pile.tab, pile.taillePile * sizeof(char));
+          	pile.tab[pile.taillePile-1] = G.rules[-1+action].lhs; 
           	
           	// Le caractère traité est le non-terminal	
-          	caractereTraite = pile[taillePile-1];
+          	caractereTraite = pile.tab[pile.taillePile-1];
           	
           	// On ajoute l'état suivant à la pile
-          	taillePile++;
-			pile = (char *) realloc(pile, taillePile * sizeof(char));
-          	pile[taillePile-1] = search_state_table(t, etatDepart, caractereTraite)+'0';
+          	pile.taillePile++;
+			pile.tab = (char *) realloc(pile.tab, pile.taillePile * sizeof(char));
+          	pile.tab[pile.taillePile-1] = search_state_table(t, etatDepart, caractereTraite)+'0';
 			
 			printf("  ");
 			printf("r%d", action);
@@ -108,7 +105,7 @@ void build_pile_AST(grammar G, table t, char* chaine) {
 			i = i-1;	
 		}
 		
-		print_pile(chaine, tailleChaine, pile, taillePile, i+1);
+		print_pile(chaine, tailleChaine, pile, i+1);
 		printf("\n");	
 		
 	}
@@ -120,7 +117,7 @@ void build_pile_AST(grammar G, table t, char* chaine) {
 		printf("\n");
 	}
 	
-	free(pile);
+	free(pile.tab);
 	free(reductions);
 	
 }
@@ -144,7 +141,7 @@ int search_state_table(table t, int etatDepart, char caractereArechercher) {
   	return state;
 }
 
-void print_pile(char* chaine, int tailleChaine, char* pile, int taillePile, size_t i) {
+void print_pile(char* chaine, int tailleChaine, PILE pile, size_t i) {
 	
 	size_t j;
 	
@@ -157,9 +154,9 @@ void print_pile(char* chaine, int tailleChaine, char* pile, int taillePile, size
 	
 	printf("\t\t\t|\t\t");
 	
-	for (j=0; j<taillePile; j++) 
+	for (j=0; j<pile.taillePile; j++) 
 	{
-		printf("%c", pile[j]);
+		printf("%c", pile.tab[j]);
 	}
 	
 }
