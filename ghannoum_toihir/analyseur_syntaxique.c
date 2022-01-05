@@ -9,19 +9,18 @@ void build_pile_AST(grammar G, table t, char* chaine) {
 	size_t i;
 	int k;
 	unsigned int tailleChaine;
-	unsigned int tailleReductions;
 	int action;
 	int etatDepart;
 	char caractereTraite;
 	PILE pile;
-	int* reductions;
+	TAB_INT reductions;
 	
 	pile.taillePile = 1;
 	pile.tab = (char*) malloc(sizeof(char) * pile.taillePile);
 	pile.tab[pile.taillePile-1] = '0';
 
-	tailleReductions = 0;
-	reductions = (int*) malloc(sizeof(int) * tailleReductions+1);
+	reductions.tailleTab = 0;
+	reductions.tab = (int*) malloc(sizeof(int) * reductions.tailleTab+1);
 
 	tailleChaine = strlen(chaine) + 1;
 			
@@ -98,9 +97,9 @@ void build_pile_AST(grammar G, table t, char* chaine) {
 			printf("  ");
 			printf("r%d", action);
 				
-			tailleReductions++;
-			reductions = (int *) realloc(reductions, tailleReductions * sizeof(int));
-			reductions[tailleReductions-1] = action;
+			reductions.tailleTab++;
+			reductions.tab = (int *) realloc(reductions.tab, reductions.tailleTab * sizeof(int));
+			reductions.tab[reductions.tailleTab-1] = action;
 			
 			i = i-1;	
 		}
@@ -113,12 +112,12 @@ void build_pile_AST(grammar G, table t, char* chaine) {
 	// S'il n'y a pas d'erreur, on affiche l'AST
 	if (action != 0) {
 		printf("\n");
-		print_AST(G, reductions, tailleReductions, chaine, tailleReductions-1);
+		print_AST(G, reductions, chaine, reductions.tailleTab-1);
 		printf("\n");
 	}
 	
 	free(pile.tab);
-	free(reductions);
+	free(reductions.tab);
 	
 }
 
@@ -161,7 +160,7 @@ void print_pile(char* chaine, int tailleChaine, PILE pile, size_t i) {
 	
 }
 
-void print_AST(grammar G, int* reductions, int tailleReductions, char* chaine, int i) {
+void print_AST(grammar G, TAB_INT reductions, char* chaine, int i) {
 	
 	int k, ind, iBis;
 	char * search;
@@ -169,7 +168,7 @@ void print_AST(grammar G, int* reductions, int tailleReductions, char* chaine, i
 	k = 0;
 	
 	// On récupère la ième règle 
-	ind = reductions[i];
+	ind = reductions.tab[i];
 	
 	printf("%c(", G.rules[-1+ind].lhs);
 	
@@ -184,10 +183,10 @@ void print_AST(grammar G, int* reductions, int tailleReductions, char* chaine, i
 			if (i >= 0) {
 				iBis = i;
 				iBis--;
-				while (abs(G.rules[-1+ind].rhs[k]) != abs(G.rules[-1+reductions[iBis]].lhs)) {
+				while (abs(G.rules[-1+ind].rhs[k]) != abs(G.rules[-1+reductions.tab[iBis]].lhs)) {
 					iBis--;
 				}
-				print_AST(G, reductions, tailleReductions, chaine, iBis);
+				print_AST(G, reductions, chaine, iBis);
 			}
 		}
 
