@@ -4,6 +4,11 @@
 #include "analyseur_syntaxique.h"
  
 
+
+/*******************************************************
+ *  Fonction permettant de construire une pile et un AST
+ * ****************************************************/
+ 
 void build_pile_AST(grammar G, table t, char* chaine) {
 	
 	size_t i;
@@ -121,6 +126,10 @@ void build_pile_AST(grammar G, table t, char* chaine) {
 	
 }
 
+/**************************************************************************
+ *  Fonction permettant de chercher le statut dans un table d'analyse donné
+ * ***********************************************************************/
+
 int search_state_table(table t, int etatDepart, char caractereArechercher) {
 	
 	int state;
@@ -139,6 +148,10 @@ int search_state_table(table t, int etatDepart, char caractereArechercher) {
     	 
   	return state;
 }
+
+/******************************************
+ *  Fonction permettant d'afficher une pile
+ * ***************************************/
 
 void print_pile(char* chaine, int tailleChaine, PILE pile, size_t i) {
 	
@@ -159,6 +172,10 @@ void print_pile(char* chaine, int tailleChaine, PILE pile, size_t i) {
 	}
 	
 }
+
+/****************************************
+ *  Fonction permettant d'afficher un AST
+ * *************************************/
 
 void print_AST(grammar G, TAB_INT reductions, char* chaine, int i) {
 	

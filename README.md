@@ -1,4 +1,4 @@
-# analyseur-syntaxique
+# Algorithmes pour la compilation
 
 ## Auteurs
 * Jihad GHANNOUM
