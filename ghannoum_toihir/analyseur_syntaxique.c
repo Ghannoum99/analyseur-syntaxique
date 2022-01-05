@@ -3,8 +3,7 @@
 
 #include "analyseur_syntaxique.h"
  
-
-
+ 
 /*******************************************************
  *  Fonction permettant de construire une pile et un AST
  * ****************************************************/
