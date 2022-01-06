@@ -21,23 +21,19 @@ typedef struct TAB_INT{
 /*******************************************
  *  Fonction permettant d'accéder à une pile
  ******************************************/
-
-// creer une pile vide
+ 
 PILE allouer_pile(int taille);
 void desallouer_pile(PILE pile);
-//empiler
-void empiler(PILE pile, int val);
-//depiler 
-void depiler(PILE pile, size_t indice);
+void empiler(PILE pile, int val); 
+void depiler(PILE pile);
  
 /*********************************************
  *  Fonction permettant d'accéder à un tableau
  ********************************************/
+ 
 TAB_INT allouer_tab(int taille);
 void desallouer_tab(TAB_INT tab);
-//lire
 int lire(TAB_INT tab, size_t indice);
-//ecrire
 void ecrire(TAB_INT tab, size_t indice, int val);
 
 /************************************************************

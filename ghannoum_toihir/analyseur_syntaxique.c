@@ -50,12 +50,17 @@ void empiler(PILE pile, int val)
 	pile.tab[pile.taillePile - 1] = val;
 }
 
-/*
-void depiler(PILE pile, size_t indice)
+
+void depiler(PILE pile)
 {
+	if (pile.tab == NULL)
+	{
+		exit(EXIT_FAILURE);
+	}
 	
+	pile.tab[pile.taillePile - 1] = 0;
 }
-*/
+
 
 /*******************************************
  *  Fonction permettant d'allouer un tableau
