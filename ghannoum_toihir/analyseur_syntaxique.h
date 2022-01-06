@@ -23,8 +23,10 @@ typedef struct TAB_INT{
  ******************************************/
  
 PILE allouer_pile(int taille);
+PILE reallouer_pile(int taille);
 void desallouer_pile(PILE pile);
-void empiler(PILE pile, int val); 
+char recuperer_element_pile(PILE pile);
+void empiler(PILE pile, char caractere); 
 void depiler(PILE pile);
  
 /*********************************************

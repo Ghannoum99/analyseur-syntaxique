@@ -24,7 +24,21 @@ PILE allouer_pile(int taille)
 	return pile;
 }
  
- 
+PILE reallouer_pile(int taille)
+{
+	PILE pile;
+	
+	pile.taillePile = taille;
+	
+	pile.tab = (char *) realloc(pile.tab, pile.taillePile * sizeof(char));
+	
+	if (pile.tab == NULL)
+	{
+		exit(EXIT_FAILURE);
+	}
+	
+	return pile;
+}
 /*********************************************
  *  Fonction permettant de desallouer une pile
  * *******************************************/ 
@@ -39,15 +53,25 @@ void desallouer_pile(PILE pile)
 	free(pile.tab);
 	
 } 
- 
-void empiler(PILE pile, int val)
+
+char recuperer_element_pile(PILE pile)
 {
 	if (pile.tab == NULL)
 	{
 		exit(EXIT_FAILURE);
 	}
 	
-	pile.tab[pile.taillePile - 1] = val;
+	return pile.tab[pile.taillePile - 1];
+}
+
+void empiler(PILE pile, char caractere)
+{
+	if (pile.tab == NULL)
+	{
+		exit(EXIT_FAILURE);
+	}
+	
+	pile.tab[pile.taillePile - 1] = caractere;
 }
 
 
@@ -132,8 +156,10 @@ void build_pile_AST(grammar G, table t, char* chaine) {
 	TAB_INT reductions;
 	
 	pile.taillePile = 1;
-	pile.tab = (char*) malloc(sizeof(char) * pile.taillePile);
-	pile.tab[pile.taillePile-1] = '0';
+	pile = allouer_pile(pile.taillePile);
+	//pile.tab = (char*) malloc(sizeof(char) * pile.taillePile);
+	empiler(pile, '0');
+	//pile.tab[pile.taillePile-1] = '0';
 
 	reductions.tailleTab = 0;
 	reductions.tab = (int*) malloc(sizeof(int) * reductions.tailleTab+1);
@@ -152,8 +178,8 @@ void build_pile_AST(grammar G, table t, char* chaine) {
 		else caractereTraite = chaine[i];
 		
 		// On convertit le char en int
-		etatDepart = pile.tab[pile.taillePile-1]-'0'; 
-		
+		//etatDepart = pile.tab[pile.taillePile-1]-'0'; 
+		etatDepart = recuperer_element_pile(pile) - '0';
 		// On va chercher l'état ou la règle à traiter
 		action = search_state_table(t, etatDepart, caractereTraite);
 		
@@ -173,13 +199,17 @@ void build_pile_AST(grammar G, table t, char* chaine) {
 			
 			// On ajoute le caractère traité à la pile
 			pile.taillePile++;
-			pile.tab = (char *) realloc(pile.tab, pile.taillePile * sizeof(char));
-			pile.tab[pile.taillePile-1] = caractereTraite;
+			pile = reallouer_pile(pile.taillePile);
+			//pile.tab = (char *) realloc(pile.tab, pile.taillePile * sizeof(char));
+			//pile.tab[pile.taillePile-1] = caractereTraite;
+			empiler(pile, caractereTraite);
 		
 			// On ajoute l'état suivant à la pile
 			pile.taillePile++;
-			pile.tab = (char *) realloc(pile.tab, pile.taillePile * sizeof(char));
-			pile.tab[pile.taillePile-1] = action + '0';
+			pile = reallouer_pile(pile.taillePile);
+			//pile.tab = (char *) realloc(pile.tab, pile.taillePile * sizeof(char));
+			empiler(pile, action + '0');
+			//pile.tab[pile.taillePile-1] = action + '0';
 			
 			printf("  ");
 			printf("d%d", action);
@@ -195,20 +225,26 @@ void build_pile_AST(grammar G, table t, char* chaine) {
          	
           	pile.taillePile = pile.taillePile - (k*2);
           	
-          	etatDepart = pile.tab[pile.taillePile-1]-'0';
+          	etatDepart = recuperer_element_pile(pile) - '0';
+          	//etatDepart = pile.tab[pile.taillePile-1]-'0';
           	
           	// On ajoute le non-terminal à la pile
           	pile.taillePile++;
-			pile.tab = (char *) realloc(pile.tab, pile.taillePile * sizeof(char));
-          	pile.tab[pile.taillePile-1] = G.rules[-1+action].lhs; 
+          	pile = reallouer_pile(pile.taillePile);
+			//pile.tab = (char *) realloc(pile.tab, pile.taillePile * sizeof(char));
+			empiler(pile, G.rules[-1+action].lhs);
+          	//pile.tab[pile.taillePile-1] = G.rules[-1+action].lhs; 
           	
           	// Le caractère traité est le non-terminal	
-          	caractereTraite = pile.tab[pile.taillePile-1];
+          	//caractereTraite = pile.tab[pile.taillePile-1];
+          	caractereTraite = recuperer_element_pile(pile) - '0';
           	
           	// On ajoute l'état suivant à la pile
           	pile.taillePile++;
-			pile.tab = (char *) realloc(pile.tab, pile.taillePile * sizeof(char));
-          	pile.tab[pile.taillePile-1] = search_state_table(t, etatDepart, caractereTraite)+'0';
+			pile = reallouer_pile(pile.taillePile);
+			//pile.tab = (char *) realloc(pile.tab, pile.taillePile * sizeof(char));
+			empiler(pile, search_state_table(t, etatDepart, caractereTraite)+'0');
+          	//pile.tab[pile.taillePile-1] = search_state_table(t, etatDepart, caractereTraite)+'0';
 			
 			printf("  ");
 			printf("r%d", action);
@@ -232,7 +268,8 @@ void build_pile_AST(grammar G, table t, char* chaine) {
 		printf("\n");
 	}
 	
-	free(pile.tab);
+	//free(pile.tab);
+	desallouer_pile(pile);
 	free(reductions.tab);
 	
 }
