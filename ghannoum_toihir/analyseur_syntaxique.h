@@ -26,7 +26,7 @@ typedef struct TAB_INT{
 PILE allouer_pile(int taille);
 void desallouer_pile(PILE pile);
 //empiler
-void empiler(PILE pile, size_t indice, int val);
+void empiler(PILE pile, int val);
 //depiler 
 void depiler(PILE pile, size_t indice);
  
