@@ -1,4 +1,4 @@
-/* Authors: Jihad GHANNOUM et Yoa TOIHIR  */
+/* Authors: Jihad GHANNOUM, Yoa TOIHIR  */
 
 
 #include "analyseur_syntaxique.h"
@@ -8,7 +8,7 @@
  *  Fonction permettant d'allouer une pile
  * ***************************************/ 
 
-PILE allouer_pile(int taille)
+Pile allouer_pile(int taille)
 {
 	PILE pile;
 	
@@ -16,7 +16,7 @@ PILE allouer_pile(int taille)
 	
 	pile.tab = (char*) malloc(sizeof(char) * pile.taillePile);
 	
-	if (pile.tab == NULL)
+	if (pile == NULL)
 	{
 		exit(EXIT_FAILURE);
 	}
@@ -27,90 +27,17 @@ PILE allouer_pile(int taille)
  
 /*********************************************
  *  Fonction permettant de desallouer une pile
- * *******************************************/ 
-
-void desallouer_pile(PILE pile)
-{
-	if (pile.tab == NULL)
-	{
-		exit(EXIT_FAILURE);
-	}
-	
-	free(pile.tab);
-	
-} 
+ *********************************************/ 
  
-void empiler(PILE pile, size_t indice, int val)
-{
-	if (pile.tab == NULL)
-	{
-		exit(EXIT_FAILURE);
-	}
-	
-	pile.tab[indice] = val;
-}
-
-/*
-void depiler(PILE pile, size_t indice)
+void desallouer_pile(PILE pile) 
 {
 	
 }
-*/
-
-/*******************************************
- *  Fonction permettant d'allouer un tableau
- * ****************************************/ 
-TAB_INT allouer_tab(int taille)
-{
-	TAB_INT tab;
-	
-	tab.tailleTab = taille;
-	
-	tab.tab = (int*) malloc(sizeof(int) * tab.tailleTab);
-	
-	if (tab.tab == NULL)
-	{
-		exit(EXIT_FAILURE);
-	}
-	
-	return tab;
-}
-
-/***********************************************
- *  Fonction permettant de desallouer un tableau
- * ********************************************/
-
-void desallouer_tab(TAB_INT tab)
-{
-	if (tab.tab == NULL)
-	{
-		exit(EXIT_FAILURE);
-	}
-	
-	free(tab.tab);
-} 
+ 
+ 
+ 
+ 
   
-
-int lire(TAB_INT tab, size_t indice)
-{
-	if (tab.tab == NULL)
-	{
-		exit(EXIT_FAILURE);
-	}
-	
-	return tab.tab[indice];
-}
-  
-void ecrire(TAB_INT tab, size_t indice, int val)
-{
-	if (tab.tab == NULL)
-	{
-		exit(EXIT_FAILURE);
-	}
-	
-	tab.tab[indice] = val;
-}
-
 /*******************************************************
  *  Fonction permettant de construire une pile et un AST
  * ****************************************************/

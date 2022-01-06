@@ -17,6 +17,33 @@ typedef struct TAB_INT{
   int tailleTab;
 } TAB_INT;
 
+
+/*******************************************
+ *  Fonction permettant d'accéder à une pile
+ ******************************************/
+
+// creer une pile vide
+PILE allouer_pile(int taille);
+void desallouer_pile(PILE pile);
+//empiler
+void empiler(PILE pile, size_t indice, int val);
+//depiler 
+void depiler(PILE pile, size_t indice);
+ 
+/*********************************************
+ *  Fonction permettant d'accéder à un tableau
+ ********************************************/
+TAB_INT allouer_tab(int taille);
+void desallouer_tab(TAB_INT tab);
+//lire
+int lire(TAB_INT tab, size_t indice);
+//ecrire
+void ecrire(TAB_INT tab, size_t indice, int val);
+
+/************************************************************
+ *  Fonction permettant de construire un analyseur syntaxique
+ ************************************************************/
+
 void build_pile_AST(grammar G, table T, char* chaine);
 int search_state_table(table t, int etatDepart, char caractereArechercher);
 void print_pile(char* chaine, int tailleChaine, PILE pile, size_t i);

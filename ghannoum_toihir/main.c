@@ -1,14 +1,10 @@
-/* Authors: Jihad GHANNOUM, Yoa TOIHIR  */
+/* Authors: Jihad GHANNOUM et Yoa TOIHIR  */
 
 #include <stdlib.h>
 #include <stdio.h>
 #include "LRGrammar.h"
 #include "read_file.h"
 #include "analyseur_syntaxique.h"
-
-
- // Ajouter des commentaires
-
 
 int main(int argc, char* argv[])
 {	
