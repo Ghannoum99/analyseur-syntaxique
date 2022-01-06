@@ -40,14 +40,14 @@ void desallouer_pile(PILE pile)
 	
 } 
  
-void empiler(PILE pile, size_t indice, int val)
+void empiler(PILE pile, int val)
 {
 	if (pile.tab == NULL)
 	{
 		exit(EXIT_FAILURE);
 	}
 	
-	pile.tab[indice] = val;
+	pile.tab[pile.taillePile - 1] = val;
 }
 
 /*
