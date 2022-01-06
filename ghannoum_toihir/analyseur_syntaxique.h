@@ -23,7 +23,6 @@ typedef struct TAB_INT{
  ******************************************/
  
 PILE allouer_pile(int taille);
-PILE reallouer_pile(int taille);
 void desallouer_pile(PILE pile);
 char recuperer_element_pile(PILE pile, size_t indice);
 void empiler(PILE pile, char caractere); 
@@ -34,9 +33,8 @@ void depiler(PILE pile);
  ********************************************/
  
 TAB_INT allouer_tab(int taille);
-TAB_INT reallouer_tab(int taille);
 void desallouer_tab(TAB_INT tab);
-int lire_tab(TAB_INT tab, size_t indice);
+int lire_element_tab(TAB_INT tab, size_t indice);
 void ecrire_tab(TAB_INT tab, size_t indice, int val);
 
 /************************************************************

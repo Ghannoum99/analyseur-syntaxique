@@ -105,7 +105,7 @@ void desallouer_tab(TAB_INT tab)
 } 
   
 
-int lire_tab(TAB_INT tab, size_t indice)
+int lire_element_tab(TAB_INT tab, size_t indice)
 {
 	if (tab.tab == NULL)
 	{
@@ -197,7 +197,7 @@ void build_pile_AST(grammar G, table t, char* chaine) {
 		else {
 			
 			k=0;
-			action = -action;
+			action = - action;
 			
 			// On supprime les k élements (correspondant au nombre d'élements à droite du non-terminal) de la pile
           	while(G.rules[-1+action].rhs[k]!='\0') k++;
@@ -306,7 +306,7 @@ void print_AST(grammar G, TAB_INT reductions, char* chaine, int i) {
 	k = 0;
 	
 	// On récupère la ième règle 
-	ind = lire_tab(reductions, i);
+	ind = lire_element_tab(reductions, i);
 	
 	printf("%c(", G.rules[-1+ind].lhs);
 	
@@ -321,7 +321,7 @@ void print_AST(grammar G, TAB_INT reductions, char* chaine, int i) {
 			if (i >= 0) {
 				iBis = i;
 				iBis--;
-				while (abs(G.rules[-1+ind].rhs[k]) != abs(G.rules[-1+lire_tab(reductions, iBis)].lhs)) {
+				while (abs(G.rules[-1+ind].rhs[k]) != abs(G.rules[-1+lire_element_tab(reductions, iBis)].lhs)) {
 					iBis--;
 				}
 				print_AST(G, reductions, chaine, iBis);
