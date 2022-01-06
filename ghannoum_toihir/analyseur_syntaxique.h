@@ -34,6 +34,7 @@ void depiler(PILE pile);
  ********************************************/
  
 TAB_INT allouer_tab(int taille);
+TAB_INT reallouer_tab(int taille);
 void desallouer_tab(TAB_INT tab);
 int lire(TAB_INT tab, size_t indice);
 void ecrire(TAB_INT tab, size_t indice, int val);
