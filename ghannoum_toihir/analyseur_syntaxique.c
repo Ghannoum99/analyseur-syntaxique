@@ -131,7 +131,7 @@ void ecrire_tab(TAB_INT tab, size_t indice, int val)
  
 void build_pile_AST(grammar G, table t, char* chaine) {
 	
-	size_t i;
+	size_t i, j;
 	int k;
 	unsigned int tailleChaine;
 	int action;
@@ -202,9 +202,13 @@ void build_pile_AST(grammar G, table t, char* chaine) {
 			// On supprime les k élements (correspondant au nombre d'élements à droite du non-terminal) de la pile
           	while(G.rules[-1+action].rhs[k]!='\0') k++;
          	
-          	pile.taillePile = pile.taillePile - (k*2);
-          	etatDepart = recuperer_element_pile(pile, pile.taillePile - 1) - '0';
+          	for(j=0; j<(k*2); j++)
+          	{
+          		depiler(pile);
+          		pile.taillePile--;
+          	}
           	
+          	etatDepart = recuperer_element_pile(pile, pile.taillePile - 1) - '0';
           	
           	// On ajoute le non-terminal à la pile
           	pile.taillePile++;
@@ -285,7 +289,8 @@ void print_pile(char* chaine, int tailleChaine, PILE pile, size_t i) {
 		printf("%c", chaine[j]);
 	}
 	
-	printf("\t\t\t|\t\t");
+	if (tailleChaine-i > 8) printf("\t\t|\t\t");
+	else printf("\t\t\t|\t\t");
 	
 	for (j=0; j<pile.taillePile; j++) 
 	{
