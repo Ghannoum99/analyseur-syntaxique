@@ -13,6 +13,7 @@ ISTY | IATIC 4 | 2021-2022
 ```sh
 $ tar xvfz ghannoum_toihir.tgz
 $ cd ghannoum_toihir
+$ cd ghannoum_toihir
 $ make
 ```
 
